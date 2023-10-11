@@ -1,0 +1,9 @@
+{
+  "id": "io.webhook.app.service",
+  "description": "WebHook Service",
+  "services": [
+    {
+      "name": "io.webhook.app.service"
+    }
+  ]
+}

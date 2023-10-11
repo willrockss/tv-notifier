@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "lgtv2": "^1.6.3",
+    "node-cron": "^3.0.2"
+  }
+}

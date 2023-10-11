@@ -1,0 +1,10 @@
+{
+  "id": "io.webhook.app",
+  "version": "0.0.1",
+  "vendor": "Kluev",
+  "type": "web",
+  "main": "index.html",
+  "title": "WebHookService",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png"
+}

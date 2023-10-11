@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="webOSjs-0.1.0/webOS.js"></script>
+    <script>
+        var linesCounter = 0;
+        function addLine(message) {
+            linesCounter++;
+            console.log(linesCounter + message);
+
+            var output = document.getElementById('output');
+            if (output) {
+                var par = document.createElement('p');
+                par.textContent = linesCounter + ': ' + message;
+            
+                output.insertBefore(par, output.firstChild);
+            } else {
+                alert('There is not "output" element on the page :( )');
+            }
+        }
+
+        function ping() {
+            console.log('going to ping internal service')
+            var webOS = window.webOS;
+            if (webOS) {
+                webOS.service.request("luna://io.webhook.app.service/", {
+                    method:"ping",
+                    parameters: {},
+                    onSuccess: function(inResponse) {
+                    //    addLine('ping onSuccess' + JSON.stringify(inResponse));
+                    },
+                    onFailure: function(inError) {
+                    //    addLine('ping onFailure' + JSON.stringify(inError));
+                    },
+                    onComplete: function(inResponse) {
+                        addLine('ping onComplete ' + JSON.stringify(inResponse));
+                    },
+                    subscribe: false,
+                    resubscribe: false
+                });
+            } else {
+                addLine('webOS is not defined!');
+            }
+        }
+    </script>
+</head>
+<body style="background-color: #181818;">
+    <h2 style="color: green;">Testing Background Service v3</h2>
+    <div id="output" style="width: 500px; height: 300px; color: green;"></div>
+    <script>
+        // webOSLaunch event
+        document.addEventListener('webOSLaunch', function(inData) {
+            // Check the received parameters
+            addLine('webOSLaunch:  ' + JSON.stringify(inData.detail));
+            // Do something in the foreground
+        }, true);
+
+        // webOSRelaunch event
+        document.addEventListener('webOSRelaunch', function(inData) {
+            // Check the received parameters
+            addLine('webOSRelaunch: ' + JSON.stringify(inData.detail));
+            // Do something in the background
+            PalmSystem.activate();
+            // Do something in the foreground
+        }, true);
+    </script>
+</body>
+</html>
